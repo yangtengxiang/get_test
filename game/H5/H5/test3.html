@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			p,h1,ul,li{
+				margin: 0;
+				padding: 0;
+			}
+			ul,li{
+				list-style: none;
+			}
+			body{
+				background: #333;
+			}
+			.main{
+				width: 400px;
+				height: 400px;
+				margin: 200px auto;
+				border: 3px solid #ccc;
+				position: relative;
+			}
+			.ninthPalace{
+				padding-left: 10px;
+				padding-top: 10px;
+				box-sizing: border-box;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				flex-wrap: wrap;
+				background: #333;
+				display: none;
+				
+			}
+			.ninthPalace li{
+				margin-right: 10px;
+				margin-bottom:10px ;
+				width: 120px;
+				height: 120px;
+				flex: 1 0 auto;
+				background: #ccc;
+			}
+			.main .tips{
+				position: absolute;
+				display: block;
+				color: #fff;
+				padding: 10px;
+				font:normal 400 28px "宋体";
+			}
+		</style>
+		<script type="text/javascript">
+			var f;
+			window.onload=function(){
+				f=function(){
+					let indexArr,	//存储人物出现位置的数组
+					totalNumber,	//总次数
+					correctNumber,	//正确次数
+					dom,			//dom元素
+					gameState,		//游戏状态
+					gameRound;		//游戏回合，可能不需要
+					dom={
+						li:document
+					}
+					function startGame(){
+						
+					}
+					function spaceKeyDown(){
+						
+					}
+					return spaceKeyDown;
+				}
+			}
+			
+			function KeyDown(e){
+				if(e.code=="Space"){
+					f();
+				}
+				
+			}
+		</script>
+	</head>
+	<body onkeydown="KeyDown(event)">
+		<div class="main">
+			<p class="tips">&nbsp;&nbsp;接下来在屏幕中间出现一个九宫格，一个卡通小人会在随机某个格子反复出现，请记住小人最后三次出现的位置，并在九宫格上依次点击。<br />&nbsp;&nbsp;如您明白任务要求，请按空格键开始。
+			</p>
+			<ul class="ninthPalace">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			
+		</div>
+	</body>
+</html>
+
+<!--
+	1 活动记忆任务
+首先屏幕中间呈现呈现指导语：
+
+接下来在屏幕中间出现一个九宫格，
+一个卡通小人会在随机某个格子反复出现，请记住小人最后三次出现的位置
+，并在九宫格上依次点击，如您明白任务要求，请按空格键开始。
+（宋体，三号，白色，背景纯黑色）
+
+。被试按空格后，屏幕中间出现九宫格，每个格子2*2cm 0.2cm粗白色线条。
+随后一卡通小人随机出现在某格500ms  间隔500ms后再次出现在随机位置
+。共计6~9次（次数随机）。随后间隔1S 九宫格下方呈现指导语
+
+“请以此点击小人最后三次出现的位置”（宋体，三号，白色，背景纯黑色）
+
+。被试完成1S后开始下一次，整个任务共计六次。
+收集被试所有六次任务中共计18次点击的平均反应时（只计算正确反应的情况）和正确率。
+
+	
+-->
+
+
+
+
+
+

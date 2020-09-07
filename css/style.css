@@ -1,0 +1,247 @@
+/* 抽离样式模块 */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+	margin: 0;
+	padding: 0;
+}
+body,
+button,
+input,
+select,
+textarea {
+	font: 12px/1.5tahoma, arial, \5b8b\4f53;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+address,
+cite,
+dfn,
+em,
+var {
+	font-style: normal;
+}
+code,
+kbd,
+pre,
+samp {
+	font-family: couriernew, courier, monospace;
+}
+small {
+	font-size: 12px;
+}
+ul,
+ol {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+}
+sup {
+	vertical-align: text-top;
+}
+sub {
+	vertical-align: text-bottom;
+}
+legend {
+	color: #000;
+}
+fieldset,
+img {
+	border: 0;
+}
+button,
+input,
+select,
+textarea {
+	font-size: 100%;
+	outline: none;
+	border: 1px solid #a9a9a9;
+}
+button:focus,
+select:focus,
+input:focus,
+textarea:focus {
+	border-color: #009acb;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+} /* 自己写的 */
+div,
+button,
+ul,
+li,
+textarea,
+input,
+p {
+	box-sizing: border-box;
+}
+.aa {
+	user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	position: initial;
+}
+html {
+	font-family: "楷体", "宋体";
+}
+button {
+	font-family: "楷体", "宋体";
+}
+body {
+	background: #eeeeee;
+	user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	position: initial;
+}
+.position {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+}
+.bespread {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.main {
+	width: 1024px;
+	height: 768px;
+	background: #fff;
+	overflow: hidden;
+}
+.disabled,
+:disabled {
+	cursor: not-allowed;
+}
+/*************************
+		公共样式
+**************************/
+body.list-page,body.list-page-big{
+	background: #666;
+	padding-bottom: 100px;
+}
+body.list-page .list{
+	width: 400px;
+	margin: 30px auto 0;
+}
+body.list-page .list .item{
+	display: block;
+	color: #FFF;
+	font-size: 40px;
+	line-height: 66px;
+	border-bottom: 1px 	dotted #ccc;
+	text-align: center;
+}
+body.list-page .list .item:last-child{
+	border:0;
+}
+body.list-page .list .item:hover{
+	background: rgba(0, 0, 0, 0.2);
+}
+
+body.list-page-big .list{
+	width: 75%;
+	min-width: 400px;
+	max-width: 900px;
+	margin: 30px auto 0;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+body.list-page-big .list .item{
+	width: 100%;
+}
+
+body.list-page-big .list .item .title{
+	font-size: 36px;
+	color: #FFF;
+	text-align: center;
+	display: block;
+	margin-bottom: 20px;
+	margin-top: 40px;
+}
+body.list-page-big .list .item>p{
+	text-indent: 2em;
+	color: #FFF;
+	font-size: 20px;
+	line-height: 1.6;
+	margin-bottom: 10px;
+	/* font-family: 微软雅黑; */
+}
+body.list-page-big .list .item .link{
+	display: flex;
+	width: 50%;
+	margin: 0px auto;
+	position: relative;
+}
+body.list-page-big .list .item .link a{
+	font-size: 30px;
+	flex: 1 1 auto;
+	text-align: center;
+	line-height: 50px;
+	color: #73B0DB;
+}
+body.list-page-big .list .item .link a:hover{
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.test-account{
+	color: #FFF;
+	display: inline-block;
+	position: absolute;
+	left: -150px;
+	top: 0;
+	bottom: 0;
+	margin:  auto;
+	height: 20px;
+	z-index: 99;
+}
+.test-account p{
+	display: none;
+	
+
+}
+.test-account p img{
+	max-height: 200px;
+}
+.test-account:hover p{
+	display: block;	
+	user-select: text;
+}

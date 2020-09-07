@@ -1,0 +1,35 @@
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\bin\Debug\SudokuCalcs.dll
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\bin\Debug\SudokuCalcs.pdb
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.SudokuPanel.resources
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.dll
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.pdb
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.Properties.Resources.resources
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\ResolveAssemblyReference.cache
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\GenerateResource-ResGen.read.1.tlog
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\GenerateResource-ResGen.read.4.tlog
+E:\VS\VS2012\Test\SudokuCalcs\SudokuCalcs\obj\Debug\GenerateResource-ResGen.write.1.tlog
+E:\VS\Work\SudokuCalcs\SudokuCalcs\bin\Debug\SudokuCalcs.dll
+E:\VS\Work\SudokuCalcs\SudokuCalcs\bin\Debug\SudokuCalcs.pdb
+E:\VS\Work\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.Properties.Resources.resources
+E:\VS\Work\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.SudokuPanel.resources
+E:\VS\Work\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.csproj.GenerateResource.Cache
+E:\VS\Work\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.dll
+E:\VS\Work\SudokuCalcs\SudokuCalcs\obj\Debug\SudokuCalcs.pdb
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\bin\Debug\SudokuCalcs.dll
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\bin\Debug\SudokuCalcs.pdb
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.csprojAssemblyReference.cache
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.Properties.Resources.resources
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.SudokuPanel.resources
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.csproj.GenerateResource.cache
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.csproj.CoreCompileInputs.cache
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.dll
+F:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.pdb
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\bin\Debug\SudokuCalcs.dll
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\bin\Debug\SudokuCalcs.pdb
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.csprojAssemblyReference.cache
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.Properties.Resources.resources
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.SudokuPanel.resources
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.csproj.GenerateResource.cache
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.csproj.CoreCompileInputs.cache
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.dll
+I:\H5\数独c#\SudokuPlayer-master - 副本\SudokuCalcs\obj\Debug\SudokuCalcs.pdb

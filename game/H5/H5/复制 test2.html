@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<!--<script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>-->
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<style type="text/css">
+			.mar_left_10 {
+				margin-left: 10px;
+			}
+			
+			.main {
+				margin: 20px auto;
+				width: 1280px;
+				height: 720px;
+				background: #FFFAE8;
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.home {
+				/* background: #9170A2; */
+				font-family: "楷体";
+			}
+			
+			.home h1 {
+				position: absolute;
+			}
+			
+			.map {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.map .title {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				z-index: 200;
+			}
+			
+			.map .title .stop {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 80px;
+				height: 80px;
+				background: rgba(239, 197, 255, 0.4);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+			}
+			
+			.map .title .stop .s {
+				width: 0px;
+				height: 30px;
+				border: 5px solid #fff;
+			}
+			
+			.map .title .stop .s3 {
+				height: 0px;
+				/*border: 0;*/
+				border: 20px solid #9775A4;
+				border-left: 20px solid #fff;
+				margin-right: -25px;
+			}
+			
+			.map .title .score,
+			.map .title .time {
+				float: right;
+				padding: 6px 25px;
+				opacity: 0.5;
+				background: #000;
+				color: #fff;
+				margin-left: 10px;
+			}
+			
+			.elevator {
+				/* background: url(img/dt.png) no-repeat center;
+				background-size: 50% 100%; */
+				position: absolute;
+				left: 400px;
+				top: 0px;
+				width: 218px;
+				height: 720px;
+			}
+			
+			.elevator .person {
+				position: absolute;
+				top: 334px;
+				width: 70px;
+				height: 180px;
+				left: 70px;
+				/*z-index: 10;*/
+			}
+			
+			.elevator .dt {
+				width: 218px;
+				height: 760px;
+				position: relative;
+			}
+			
+			.elevator .door {
+				position: absolute;
+				left: 36px;
+				top: 279px;
+				width: 144px;
+				height: 235px;
+				z-index: 100;
+			}
+			
+			.elevator .door img {
+				position: absolute;
+				top: 0;
+				right: 0;
+				height: 235px;
+				width: 72px;
+				transition: cubic-bezier(0.65, 0, 0.3, 1);
+			}
+			
+			.elevator .door img.elevatorDoor {
+				left: 0;
+				transform: rotateY(180deg);
+			}
+			
+			.elevator .door.close img {
+				width: 0px;
+			}
+			
+			.floor {
+				width: 100%;
+				height: 100%;
+				/*background:#9A6BAB ;*/
+				position: relative;
+			}
+			
+			.floor .items {
+				background: url(img/dt.png) no-repeat center;
+				background-size: 1280px 380px;
+				width: 100%;
+				height: 380px;
+				position: absolute;
+				transition: cubic-bezier(0.65, 0, 0.3, 1);
+			}
+			
+			.floor .items img {
+				position: absolute;
+				bottom: 104px;
+			}
+			
+			.floor .items .doorFrame {
+				right: 102px;
+			}
+			
+			.floor .items .door {
+				width: 82px;
+				height: 198px;
+				right: 108px;
+				bottom: 108px;
+			}
+			
+			.floor .items .stool {
+				left: 200px;
+				width: 125px;
+				height: 146px;
+			}
+			
+			.floor .items .stool2 {
+				left: 720px;
+				width: 230px;
+				height: 70px;
+			}
+			
+			.floor .items .luggage {
+				bottom: 164px;
+				left: 215px;
+				width: 100px;
+				height: 80px;
+				display: none;
+				z-index: 10;
+			}
+			
+			.floor .items .need {
+				position: absolute;
+				top: 10px;
+				/*left: 880px;*/
+				right: 200px;
+				width: 190px;
+				height: 110px;
+				/*border-radius:50% ;*/
+				background: url(img/bubble.png) no-repeat center;
+				background-size: 100% 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: nowrap;
+				font-size: 26px;
+				/*opacity:0;*/
+				filter: alpha(opacity=0);
+				/*filter 过滤器   兼容IE678*/
+			}
+			
+			.floor .items .need img {
+				width: 80px;
+				height: 64px;
+				position: static;
+			}
+			
+			.floor .items .shade {
+				background: rgba(0, 0, 0, 0.4);
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+			}
+			
+			.remind {
+				position: absolute;
+				bottom: -90px;
+				left: 0;
+				right: 0;
+				height: 90px;
+				background: rgba(0, 0, 0, 0.4);
+			}
+			
+			.remind h1 {
+				text-align: center;
+				color: #FFF;
+				line-height: 90px;
+				margin: 0;
+			}
+		</style>
+		<script type="text/javascript">
+			//var gm=new gameMain();
+			var gm =
+				function gameMain() {
+					var floorSum, //楼层数
+						score, //分数
+						luggages, //行李(数组)
+						luggagesIndex, //一个临时变量，用来存储客人需要的行李的下标
+						nextFloorIsGuest, //下一层是否是行李
+						TimeNumber, //倒计时
+						currentCorrectNumber, //当前运送正确次数
+						currentNumber, ////当前运送总次数
+						correctNumber, //需要运送正确次数
+						time, //计时器------------------------------
+						countDown, //倒计时计时器
+						isKeyDown, //是否接受键盘事件
+						gameStatus = 0, //游戏状态   0  未开始/结束   1   暂停中    2  游戏中
+						Gevent,
+						velocity, //速率,默认为5,修改即可调整速度
+						dom; //包含一些dom元素
+					//事件队列
+					this.executeEvent = function() {
+						var a = Gevent.shift();
+						console.log(a.name + "方法执行");
+						a();
+						//Gevent.shift()();
+					};
+
+					function addEvent(f, timeValue) {
+						Gevent.push(f);
+						console.log(Gevent);
+						clearTimeout(time);
+						time = setTimeout("this.executeEvent()", timeValue);
+						console.log(f.name + "方法" + timeValue + "后执行");
+					}
+					/*离开楼层
+					 * 进入楼层
+					 * 开门
+					 * 拿行李
+					 * 关门
+					 * 判断是否需要给行李
+					 * 需要：用户判断给不给行李{
+					 * 	给： 开门  动画  空格失效
+					 * 	不给 空格失效
+					 * }
+					 * 不需要：跳过
+					 * 
+					 * 离开.....
+					 * */
+					//离开楼层
+					function LeaveFloor() {
+						//决定下一层是人还是行李  1:2
+						floorSum++;
+						nextFloorIsGuest = Math.random() > 0.33;
+						console.log("正在前往下一层")
+						var items = $(".map .floor .items");
+						//$(".map .floor .items").eq(2).find(".luggage").css("display","none");
+						items.eq(2).find(".luggage").css("display", "none");
+						items.eq(2).find(".shade").css("display", "block");
+						$(".map .floor").append($(".map .floor .items").last().clone());
+						items.animate({
+							top: '+=380px'
+						}, 3000 * velocity);
+						items.first().remove();
+						addEvent(EntranceFloor, 3200 * velocity);
+					}
+					//进入楼层
+					function EntranceFloor() {
+						console.log("你来到了第" + floorSum + "层\t当前分数" + score);
+						$(".map .floor .items").eq(2).find(".shade").css("display", "none");
+						//决定行李颜色并显示
+						//let tempIndex=parseInt(Math.random()*luggages.length);
+						tempIndex = parseInt(Math.random() * luggages.length);
+						luggages[tempIndex].number++;
+						var img = $(".map .floor .items").eq(2).find(".luggage");
+						img.attr({
+							src: "img/" + luggages[tempIndex].url + ".png",
+							color: "" + luggages[tempIndex]
+						});
+						img.css("display", "block");
+						//开门
+						openDoor(true);
+						//拿行李
+						addEvent(take, 1000 * velocity);
+					}
+					//   开门  true/关门  无参数|false|0
+					function openDoor(bool) {
+						$(".elevator .door img").animate({
+							width: bool ? 0 : 72 + "px"
+						}, 1000 * velocity);
+					}
+					//
+					//拿行李
+					function take() {
+						var person = $(".map .elevator .person");
+						var luggage = $(".map .floor .items").eq(2).find(".luggage");
+						person.animate({
+							left: "-80px"
+						}, 300);
+						person.animate({
+							left: "-80px"
+						}, 300);
+						person.animate({
+							left: "70px"
+						}, 300);
+						luggage.animate({
+							left: "215px",
+							bottom: "164px"
+						}, 300);
+						luggage.animate({
+							left: "306px",
+							bottom: "170px"
+						}, 300);
+						luggage.animate({
+							left: "456px",
+							bottom: "164px"
+						}, 300);
+
+						//addEvent(openDoor,900);
+						addEvent(isGive, 900);
+						//.map .floor .items
+					}
+					//判断是否给客人行李
+					function isGive() {
+						openDoor();
+						if(nextFloorIsGuest && floorSum > 2) { //客人需要行李
+							//随机产生客人所需要的行李
+
+							isKeyDown = true;
+							$(".remind").animate({
+								bottom: "0px"
+							}, 300);
+							var curFloor = $(".map .floor .items").eq(2);
+							curFloor.find(".door").animate({
+								width: "70px"
+							}, 300);
+							curFloor.find(".need").animate({
+								opacity: 1,
+								filter: "alpha(opacity=100)"
+							}, 300);
+
+							curFloor.find(".need img").attr({
+								src: "img/" + luggages[luggagesIndex].url + ".png",
+								color: "" + luggages[luggagesIndex]
+							});
+							addEvent(clearKeyDown, 2000);
+						} else { //不需要行李
+							//openDoor();
+							addEvent(LeaveFloor, 1000 * velocity);
+						}
+
+					}
+					//空格失效
+					function clearKeyDown() {
+						isKeyDown = false;
+						console.log("空格失效");
+						$(".remind").animate({
+							bottom: "-90px"
+						}, 300);
+						var curFloor = $(".map .floor .items").eq(2);
+						curFloor.find(".door").animate({
+							width: "82px"
+						}, 300);
+						curFloor.find(".need").animate({
+							opacity: 0,
+							filter: "alpha(opacity=100)"
+						}, 300);
+						openDoor();
+						addEvent(LeaveFloor, 1000 * velocity);
+
+					}
+					//给客人行李
+					function give() {
+						/*造行李
+						 * 开门
+						 * 
+						 *给行李
+						 * 关门、
+						 * 是不是要把气泡变成对号
+						 * 其他项
+						 * 增加分数   减少行李     
+						 * */
+						currentNumber++;
+						if(luggagesIndex[1] != undefined) {
+							if(luggages[luggagesIndex[0]].number > 0 && luggages[luggagesIndex[1]].number > 0) {
+								luggages[luggagesIndex[0]].number--;
+								luggages[luggagesIndex[1]].number--;
+								console.log("你给了客人\t" + luggages[luggagesIndex[0]].color + "行李  x1 + " + luggages[luggagesIndex[1]].color + "行李  x1");
+								currentCorrectNumber++;
+								isKeyDown = false;
+								if(correctNumber <= currentCorrectNumber) endGame();
+								return;
+							}
+						} else {
+							if(luggages[luggagesIndex[0]].number > 0) {
+								luggages[luggagesIndex[0]].number -= 2;
+								console.log("你给了客人\t" + luggages[luggagesIndex[0]].color + "行李  x2");
+								currentCorrectNumber++;
+								isKeyDown = false;
+								if(correctNumber <= currentCorrectNumber) endGame();
+								return;
+							}
+						}
+						//前边没处理代表没有足够的行李
+						isKeyDown = false;
+						console.log("你没有足够的行李");
+					}
+
+					//初始化游戏
+					function startGame(rank) {
+						floorSum = 1;
+						score = 0;
+						nextFloorIsGuest = true;
+						currentCorrectNumber = 0;
+						currentNumber = 0;
+						isKeyDown = false;
+						gameStatus = 2;
+						luggagesIndex = [];
+						Gevent = [];
+						TimeNumber = 60 * 3;
+						correctNumber = 6 + 0 - 5;
+						luggages = [];
+						let color = ["蓝色", "黄色", "红色", "绿色", "紫色", "黑色", "青色", "蓝白色", "黄白色", "红白色", "以此类推......"];
+						let url = ["blue", "yellow", "red", "green", "purple", "black", "cyan"];
+
+						function luggage(Color, Num, Url) {
+							this.color = Color;
+							this.number = Num;
+							this.url = Url;
+						}
+						for(let i = 0; i < 2 + (rank - 1) / 4; i++) { //控制颜色数量
+							if(i >= 6) break; //最大数量控制
+							luggages[i] = new luggage(color[i], 0, url[i]);
+						}
+						velocity = (1 - (rank / 100));
+
+						dom = {
+							time: document.querySelector(".map .title .time span"),
+							score: document.querySelector(".map .title .score span"),
+							stop: document.querySelector(".map .title .stop"),
+
+						};
+						dom.stop.onclick = stop;
+						//设定动画时间
+						// 用jquery做动画这个没用了
+						/*
+						var style = document.createElement("style");
+						document.head.appendChild(style);
+						function insertCss(element, csName, position) { //跨浏览器兼容
+							if(style.sheet.insertRule) { // style.sheet.insertRule 非IE的时候会读取到一个函数，IE8即以上的时候会读取到undefined
+								style.sheet.insertRule(element + '{' + csName + '}', position);
+							} else if(style.sheet.addRule) {
+								style.sheet.addRule(element, csName, position);
+							}
+						}
+						let i=0;
+						//开关门时间基数  1000
+						//电梯门
+						//insertCss(".elevator .door img","transition-duration:"+5000*velocity+"ms  !important;", i++);
+						//人
+						//insertCss(".elevator img"," transition-duration:"+1000*velocity+"ms  !important;", i++);
+						//行李
+						//insertCss(".floor .items .luggage"," transition-duration:"+1000*velocity+"ms  !important;", i++);
+						//楼层的移动速度
+						//insertCss(".floor .items"," transition-duration:"+3000*velocity*0.9+"ms  !important;", i++);
+
+						*/
+						//""
+						addEvent(LeaveFloor, 1000);
+						countDown = setInterval("this.ShowTime()", 1000);
+					}
+
+					//游戏结束
+					function endGame() {
+						gameStatus = 0;
+						Gevent = [];
+						clearTimeout(time);
+						clearInterval(countDown);
+						if(currentCorrectNumber >= correctNumber) { //游戏胜利
+							alert(`通关！\n我的得分：${score}\n正确次数：${currentCorrectNumber}\n正确率：${currentCorrectNumber*100/currentNumber}%`);
+						} else { //游戏剩余时间为0
+							alert(`失败！\n我的得分：${score}\n正确次数：${currentCorrectNumber}\n正确率：${currentCorrectNumber/currentNumber}%`);
+						}
+					}
+					//显示倒计时
+					this.ShowTime = function() {
+						if(TimeNumber < 0) endGame();
+						let surplusTime = "";
+						surplusTime += parseInt(TimeNumber / 60);
+						surplusTime += ":";
+						surplusTime += (TimeNumber % 60 < 10) ? ("0" + TimeNumber % 60) : TimeNumber % 60;
+						//显示
+						TimeNumber--;
+						dom.time.innerText = surplusTime;
+					}
+
+					function stop() {
+						//alert("stop");
+						if(gameStatus == 2) { //游戏中，暂停游戏
+							dom.stop.children[1].className += " s3";
+							gameStatus = 1;
+						} else if(gameStatus == 1) { //暂停中，开始游戏
+
+							dom.stop.children[1].className = "s mar_left_10";
+							gameStatus = 2;
+						}
+						//clearTimeout(time);
+						//clearInterval(countDown);
+					}
+
+					this.t = function(value) {
+						if(gameStatus == 0) {
+							startGame(50);
+						}
+						/*
+						if(value!=undefined){
+							if(value=="stop");
+							else if(value=="start");
+							else if(parseInt(value)>0) startGame(parseInt(value));//传入数字代表开始游戏
+							else if(value="space" && isKeyDown){
+								 give();
+							}
+						}*/
+					}
+
+					return this.t;
+				}();
+
+			function KeyDown(event) {
+				if(event.code == "Space") {
+					gm("space");
+				}
+			}
+		</script>
+	</head>
+
+	<body onkeydown="KeyDown(event)">
+		<div class="main">
+			<div class="home" style="display: none;">
+				<h1>记忆服务</h1>
+			</div>
+			<div class="map">
+				<!--功能区-->
+				<div class="title">
+					<div class="stop">
+						<div class="s"></div>
+						<div class="s mar_left_10"></div>
+					</div>
+					<div class="score">分数:<span id="score">0</span></div>
+					<div class="time">时间:<span id="time">0:00</span></div>
+				</div>
+				<!--楼层-->
+				<div class="floor">
+					<div class="items" data-floor="3" style="top:1002px;">
+						<img src="img/doorFrame.png" class="doorFrame">
+						<img src="img/door2.png" class="door">
+						<img src="img/stool.png" class="stool">
+						<img src="img/stool2.png" class="stool2">
+						<img src="" class="luggage">
+						<div class="need"><img src="" class="needLuggage">X2</div>
+						<div class="shade"></div>
+					</div>
+					<div class="items" data-floor="-1" style="top:622px;">
+						<img src="img/doorFrame.png" class="doorFrame">
+						<img src="img/door2.png" class="door">
+						<img src="img/stool.png" class="stool">
+						<img src="img/stool2.png" class="stool2">
+						<img src="" class="luggage">
+						<div class="need"><img src="" class="needLuggage">X2</div>
+						<div class="shade"></div>
+					</div>
+					<div class="items" data-floor="1" style="top:242px;">
+						<img src="img/doorFrame.png" class="doorFrame">
+						<img src="img/door2.png" class="door">
+						<img src="img/stool.png" class="stool">
+						<img src="img/stool2.png" class="stool2">
+						<img src="" class="luggage">
+						<div class="need"><img src="" class="needLuggage">X2</div>
+						<div class="shade"></div>
+					</div>
+					<div class="items" data-floor="2" style="top:-138px;">
+						<img src="img/doorFrame.png" class="doorFrame">
+						<img src="img/door2.png" class="door">
+						<img src="img/stool.png" class="stool">
+						<img src="img/stool2.png" class="stool2">
+						<img src="" class="luggage">
+						<div class="need"><img src="" class="needLuggage">X2</div>
+						<div class="shade"></div>
+					</div>
+					<div class="items" data-floor="3" style="top:-518px;">
+						<img src="img/doorFrame.png" class="doorFrame">
+						<img src="img/door2.png" class="door">
+						<img src="img/stool.png" class="stool">
+						<img src="img/stool2.png" class="stool2">
+						<img src="" class="luggage">
+						<div class="need"><img src="" class="needLuggage">X2</div>
+						<div class="shade"></div>
+					</div>
+				</div>
+				<!--电梯-->
+				<div class="elevator">
+					<img src="img/elevator.png" alt="" class="dt">
+					<img src="img/person.png" class="person">
+					<div class="door">
+						<img src="img/door.png" class="elevatorDoor">
+						<img src="img/door.png">
+					</div>
+				</div>
+				<!--提升框-->
+				<div class="remind">
+					<h1 id="remind">如果有足够的行李请按空格键</h1>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		//其实我们可以这样想：浏览器是单线程的，那么我们只要在暂停的地方做三秒其他的事情不就达到了暂停的效果吗。试试这个：   1.
+		//js暂停函数     2. 
+		function Pause(obj, iMinSecond) {
+			if(window.eventList == null) window.eventList = new Array();
+			var ind = -1;
+			for(var i = 0; i < window.eventList.length; i++) {
+				if(window.eventList[i] == null) {
+					window.eventList[i] = obj;
+					ind = i;
+					break;
+				}
+			}
+			if(ind == -1) {
+				ind = window.eventList.length;
+				window.eventList[ind] = obj;
+
+			}
+			setTimeout("GoOn(" + ind + ")", iMinSecond);
+
+		}
+		//js继续函数    20. 
+		function GoOn(ind) {
+			var obj = window.eventList[ind];
+			window.eventList[ind] = null;
+			if(obj.NextStep) obj.NextStep();
+			else obj();
+		} //js暂停函数
+		function Pause(obj, iMinSecond) {
+			if(window.eventList == null)
+				window.eventList = new Array();
+			var ind = -1;
+			for(var i = 0; i < window.eventList.length; i++) {
+				if(window.eventList[i] == null) {
+					window.eventList[i] = obj;
+					ind = i;
+					break;
+				}
+			}
+			if(ind == -1) {
+				ind = window.eventList.length;
+				window.eventList[ind] = obj;
+			}
+			setTimeout("GoOn(" + ind + ")", iMinSecond);
+		}
+		//js继续函数
+		function GoOn(ind) {
+			var obj = window.eventList[ind];
+			window.eventList[ind] = null;
+			if(obj.NextStep) obj.NextStep();
+			else obj();
+		}
+		//使用方法很简单: Java代码 1.
+		function testJsStop() {
+			alert("1");
+			Pause(this, 3000);
+			this.NextStep = function() {
+				alert("2");
+			}
+		}
+	</script>
+
+</html>
+
+<!-- 
+《记忆类》“记忆服务”
+   1.第一幕屏幕呈现：紫色背景，屏幕中间白色字体显示游戏名称“记忆服务”；游戏名称下小一号白色字体显示游戏说明“该游戏通过给酒店的客人运送行李锻炼您的记忆”；
+   游戏说明下两个白色圆角长方形边框，左边边框白色字体显示“试玩”，右边边框内白色字体显示“开始”；右下角白色字体显示“静音”。
+2.点击“试玩”。首先行李自右向左划过，后卡通小人紧随划过。之后屏幕中间显示电脑键盘图案，白色显示空格键，
+白色字体在键盘图案下说明“本游戏会用到空格键，请按空格键继续”。左上角白色字体显示“退出训练”。
+按空格键试玩开始，屏幕中间呈现向上移动的电梯，屏幕下方说明“
+本游戏的任务是把行李运送给酒店客人
+”“游戏中，
+随着电梯上行服务员会自动拿行李
+”。随后一黄色卡通人物从电梯中出来，取走位于电梯左侧椅子上的蓝色行李。电梯
+继续上行，又取走一蓝色行李，继续上行，电梯右侧呈现一门，门左上方有白色对话框，框内显示两个蓝色行李，屏
+幕下方白色字体说明“提示：您至少有两个蓝色行李是按下空格键”。此时按下空格键，门打开，对话中显示“谢谢！”。
+后继续上行拿上黄色行李箱，右侧继续出现门及所需行李箱，若颜色及数量不满足条件，白色字体提示“您至少有一个
+黄色行李时按下空格键，否则等等”，若此时按下空格，则运送错误，显示“对不起，我不需要这些行李！”试玩结束。
+白色字体显示“您最好记住您拿到的行李箱颜色及数量”。
+3.正式游戏界面。紫色背景，屏幕中间显示游戏关卡，关卡下白色字体提示“避免错误以解锁更高关卡”，提示语下
+白色框内“继续”，左上“暂停”按键。点击“继续”游戏开始，与试玩相同，电梯上行。屏幕右上角显示倒计时及得分
+，三秒倒计时后游戏开始，每运送对一次计10分，共需运送6次，游戏结束后计
+		”得分”
+		“正确数” 
+		“正确率”
+。随着游戏关数的提高，
+		倒计时时长增加，
+		每次拿到行李的颜色及数量增加
+		所需运送行李的次数增加
+		电梯速度变快，
+运送
+错误时可按空格键回顾已有行李的颜色及数量，
+注意门外左上框内提示所需的行李件数始终为2件。
+4.游戏通关原理。需要记忆每次取到的行李箱的颜色和数量，并在运送后记忆行李箱颜色和数量。即记忆行李箱颜色
+和数量的增减情况。 
+ -->
+<!--
+ 	第一关
+第一层：取得一个蓝色行李箱。
+第二层：取得一个蓝色行李箱。
+第三层：右侧门显示需要一个蓝色行李箱（此时按下空格运送一个蓝色行李，剩余一个蓝色行李箱），随后取得一个黄色行李。
+第四层：右侧门显示需要两个蓝色行李箱（此时不做任何操作，因为电梯里的行李箱不满足条件），随后取得一个黄色行李。
+第五层：右侧门显示需要两个黄色行李箱（此时按下空格运送两个黄色行李箱），左侧获得一个蓝色行李箱。
+第六层：右侧门显示需要一个蓝色行李箱（此时按下空格运送一个蓝色行李），获取一黄色行李。
+第七层：左侧获得一个蓝色行李箱。
+第八层：右侧门显示需要一个蓝色和一个黄色行李箱（此时按下空格运送一蓝一黄行李箱）。不获取行李箱。
+第九层：右侧门显示需要两个蓝色行李（此时不做任何操作，因为电梯里的行李箱不满足条件），获取一黄色行李。
+第十层：获取一蓝色行李。
+第十一层：右侧门显示需要两个蓝色行李（此时按下空格运送两个蓝色行李），获取一黄色行李。
+第十二层：获取一蓝色行李。
+第十三层：右侧门显示需要两个黄色行李和一个蓝色行李，按下空格运送，通关。
+ 
+第二关
+第一层：取得一个蓝色一个黄色行李箱。
+第二层：取得一个红色行李箱。
+第三层：右侧门显示需要一个黄色行李箱（此时按下空格运送一个黄色行李），随后取得一个蓝色行李。
+第四层：右侧门显示需要两个红色行李箱（此时不做任何操作，因为电梯里的行李箱不满足条件），随后取得一个红色行李。
+第五层：右侧门显示需要两个蓝色行李箱（此时按下空格运送两个蓝色行李箱），左侧获得一个黄色行李箱。
+第六层：右侧门显示需要一个蓝色行李箱（此时不做任何操作，因为电梯里的行李箱不满足条件），获取一黄色行李。
+第七层：右侧门显示需要两个黄色行李箱（此时按下空格运送两个黄色行李箱），左侧获得一个蓝色行李箱。
+第八层：右侧门显示需要一个蓝色和一个红色行李箱（此时按下空格运送一蓝一红行李箱）。不获取行李箱。
+第九层：右侧门显示需要两个蓝色行李（此时不做任何操作，因为电梯里的行李箱不满足条件），获取一黄色行李。
+第十层：获取两个蓝色行李。
+第十一层：右侧门显示需要一红一蓝行李（此时按下空格运送），获取一黄色行李。
+第十二层：获取一红色行李。
+第十三层：右侧门显示需要红黄蓝行李各一个，按下空格运送，通关
+ 	
+ -->
+
+<!--
+//开始睡觉  
+function sleep(obj, iMinSecond){   
+   if (window.eventList==null){
+        window.eventList=new Array(); 
+    }
+   var ind=-1;   
+   for (var i=0;i<window.eventList.length;i++){   
+       if (window.eventList[i]==null) {   
+         window.eventList[i]=obj;   
+         ind=i;   
+         break;   
+        }   
+    }   
+   if (ind==-1){   
+   ind=window.eventList.length;   
+   window.eventList[ind]=obj;   
+   }   
+  setTimeout("GoOn(" + ind + ")",iMinSecond);   
+}   
+  
+//继续执行  
+function wake(ind){   
+  var obj=window.eventList[ind];   
+  window.eventList[ind]=null;   
+  if (obj.NextStep){
+    obj.NextStep(); 
+  }
+
+--------------------- 
+作者：Michael1822852997 
+来源：CSDN 
+原文：https://blog.csdn.net/weixin_41697143/article/details/81837076 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+	
+	
+	
+-->

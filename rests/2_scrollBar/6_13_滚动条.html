@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta charset="UTF-8" />
+		<title>新页面</title>
+		<style>
+			h1 {
+				text-align: center;
+			}
+			.main {
+				width: 400px;
+				height: 400px;
+				background: #eee;
+				margin: 0 auto;
+				position: relative;
+			}
+
+			.box {
+				width: 400px;
+				height: 400px;
+				background: #ccc;
+				overflow: hidden;
+				position: relative;
+			}
+			p {
+				text-align: center;
+				background: #ddc6b7;
+				line-height: 50px;
+				font-size: 20px;
+			}
+			.scroll-bar {
+				position: absolute;
+				right: 2px;
+				height: 30px;
+				width: 8px;
+				background: rgba(0, 0, 0, 0.3);
+				border-radius: 5px;
+				z-index: 99;
+			}
+		</style>
+		<script>
+			var el;
+			var bar;
+			window.onload = function () {
+				el = document.querySelector(".box");
+
+				bar = document.querySelector(".scroll-bar");
+				//初始化滚动条的高度为显示高度和总高度的比值
+				//同时,因为scrollTop 和scrollHeight始终相差一个屏幕的高度,换算到滚动条上就是这么长 所以可以从头走到尾
+				bar.style.height = (el.clientHeight / el.scrollHeight) * 100 + "%";
+				window.onwheel = function (e) {
+					console.warn(el.scrollTop, -e.wheelDeltaY);
+					setScroll(-e.wheelDeltaY);
+				};
+
+				var targetValue = 0;
+				var only = 0;
+				var timer = 0;
+				var scrollNumber = 10; //10次分开滚动
+				/*
+					将输入的值进行处理,使共滚动10次达到圆滑
+					水平有限,不写曲线
+				*/
+				function setScroll(value, is, _scrollNumber, time) {
+					//这里对输入进行过滤? 取整10?
+					console.log("setScroll: " + value);
+					targetValue += value;
+					only = targetValue / (_scrollNumber || scrollNumber);
+					var count = 0;
+					clearInterval(timer);
+					timer = setInterval(() => {
+						el.scrollTop += only;
+						targetValue -= only;
+						// console.log(el.scrollHeight,  ,el.scrollTop, targetValue);
+						// console.log(el.scrollTop/el.scrollHeight);
+						// console.log(el.scrollTop/(el.scrollHeight-el.clientHeight));
+
+						bar.style.top = (el.scrollTop / el.scrollHeight) * 100 + "%";
+						//这个可以到1
+						// console.log(el.scrollTop / el.scrollHeight*100 + "%");
+						if (++count === 8 && !is && only > 2) {
+							//scrollTop不接受小数,所以圆滑处理要修改
+							// console.warn(targetValue);
+							targetValue -= only * 2;
+							setScroll(only * 2, 1);
+						}
+						if (count >= 10) {
+							clearInterval(timer);
+							// console.warn(el.scrollTop, only);
+						}
+					}, time || 10);
+				}
+				//wheelDeltaY  往上是正数 往下是负数
+			};
+		</script>
+	</head>
+	<body>
+		<h1>滚动条</h1>
+		<div class="main">
+			<div class="scroll-bar"></div>
+			<div class="box">
+				<p>1</p>
+				<p>2</p>
+				<p>3</p>
+				<p>4</p>
+				<p>5</p>
+				<p>6</p>
+				<p>7</p>
+				<p>8</p>
+				<p>9</p>
+				<p>10</p>
+				<p>11</p>
+				<p>12</p>
+				<p>13</p>
+				<p>14</p>
+				<p>15</p>
+				<p>16</p>
+				<p>17</p>
+				<p>18</p>
+				<p>19</p>
+				<p>20</p>
+				<p>21</p>
+				<p>22</p>
+				<p>23</p>
+				<p>24</p>
+				<p>25</p>
+				<p>26</p>
+				<p>27</p>
+				<p>28</p>
+				<p>29</p>
+				<p>30</p>
+			</div>
+		</div>
+		<strong>TODO: 暂时没有添加拖拽</strong>
+	</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.main {
+				width: 100px;
+				height: 140px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				margin: auto;
+				font-family: 微软雅黑;
+			}
+
+			.main p {
+				font-size: 18px;
+				margin: 0 -160px;
+			}
+
+			.main #sight {
+				text-align: center;
+				line-height: 140px;
+				font-size: 40px;
+				color: #444;
+			}
+
+			.main #key {
+				background: #444;
+				color: #fff;
+				line-height: 140px;
+				font-size: 80px;
+				text-align: center;
+				width: 100px;
+				margin: 0;
+			}
+
+			* {
+				transition: 0.5s;
+			}
+		</style>
+		<script type="text/javascript">
+			var SpaceDown;
+			window.onload = function() {
+				SpaceDown =
+					function () {
+						let key=0; //当前字母
+						let lastKey=-1;//上一次字母
+						let keyDom = document.querySelector("#key"); //用来显示字母的Dom
+						let equalCount = 0;//相同次数
+						let showCount = 0;//出现次数
+						let correctCount = 0;//用户操作正确次数
+						let errorCount = 0;//用户操作错误次数
+						let t;//计时器
+						let isInput=false;
+						//用来显示下一个字母  equal  是否要相同
+						ShowKey=function (equal) {
+							console.log("是否相同"+equal);
+							var curKey;
+							if (equal){ 
+								keyDom.innerText = key;
+								equalCount++;
+							}else {
+								do {
+									let ranNum = Math.ceil(Math.random() * 25); //生成一个0到25的数字
+									curKey = String.fromCharCode(65 + ranNum); //转换为字母
+								} while (key == curKey);
+							}
+							lastKey=key;
+							key = equal?key:curKey;
+							keyDom.innerText = key;
+							showCount++;
+						}
+						this.HiddenKey=function (){
+							keyDom.innerText="";
+							isInput=false;
+							if(showCount==49){
+								alert("结束\r\n当前正确次数："+correctCount+"\r\n当前错误次数："+errorCount);
+								console.log("----------------------------")
+								console.log("当前正确次数："+correctCount);
+								console.log("当前错误次数："+errorCount);
+								console.log("当前相同次数："+equalCount);
+								console.log("当前总次数："+showCount);
+								return;
+							}
+							t=setTimeout("IsEqual()",1500);
+							
+						}
+						//判断下一次是否相同,并调用ShowKey
+						this.IsEqual=function () {
+							//相同次数24,不同25
+							
+							ShowKey(Math.random() < (24 - equalCount) / (49 - showCount));
+							t=setTimeout("HiddenKey()",500);
+						}
+						//判断用户操作是否正确  当按空格时触发此事件
+						function IsCorrect() {
+							if(isInput) return;//防止重复输入
+							if(key==0&&lastKey==-1) start();
+							if (key == lastKey) correctCount++; //相同
+							else if (key != "" && lastKey!=0) errorCount++;
+							else { /*这里是闲着没事乱按的*/ }
+							isInput=true;
+							console.log("当前"+key+"上次"+lastKey);
+							console.log("当前正确次数："+correctCount);
+							console.log("当前错误次数："+errorCount);
+							console.log("当前相同次数："+equalCount);
+							console.log("当前总次数："+showCount);
+						}
+						
+						function start(){
+							document.querySelector(".main p").style.display="none";
+							document.querySelector("#sight").style.display="block";
+							t=setTimeout("document.querySelector('#sight').style.display='none';this.IsEqual();",500);
+						}
+						return IsCorrect;
+					}();
+				
+			}
+
+			function KeyDown(event) {
+				if (event.code == "Space") SpaceDown();
+			}
+		</script>
+	</head>
+	<body onkeydown="KeyDown(event)">
+		<div class="main">
+			<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;接下来将连续呈现字母X或者Y，当两次呈现的字母不一致时按空格键，当一致时不需任何操作。请您尽快反应，因为字母会按照一定的时间间隔持续呈现。如您理解请按空格开始。</p>
+			<span id="sight" style="display: none;">+</span>
+			<!--注视点  -->
+			<h1 id="key"></h1><!-- 用來用来显示自瞄的 -->
+		</div>
+	</body>
+</html>
+<!-- 
+反应抑制：首先屏幕中间呈现指导语：
+接下来将连续呈现字母X或者Y，当两次呈现的字母不一致时
+按空格键，当一致时不需任何操作。请您尽快反应，因为字母会按照一定的时间间隔持续呈现。如
+您理解请按空格开始。
+按空格后屏幕正中间出现注视点“+”（0.5cm*0.5cm）500ms。随后屏幕正中
+间开始随机呈现字母X或者Y。每个字母呈现500ms，字母呈现时间间隔为1000ms。无论操作与否，
+字母都会持续出现。字母X/Y高2cm宽1cm位于方框正中间位置，白色，黑底。共计出现49次，连续
+相同字母和不同字母的情况各一半。分别收集被试相同连续字母下和不同连续字母时的按键率。 
+ -->

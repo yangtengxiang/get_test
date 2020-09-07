@@ -1,0 +1,91 @@
+body {
+	color: #fff;
+}
+.bg {
+	position: fixed;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	background: no-repeat center;
+	background-image: url(../img/sea0.jpg);
+	background-size: cover;
+
+	transition: opacity 2000ms;
+}
+.bg.bg-old {
+	opacity: 0;
+	/* display: none; */
+	transition: opacity 2000ms;
+}
+header {
+	display: flex;
+	padding-top: 40px;
+	justify-content: center;
+	align-items: center;
+}
+header .photo {
+	width: 180px;
+	height: 180px;
+	background: url(../img/brinedFish.jpg) no-repeat center;
+	background-size: contain;
+	border-radius: 20px;
+}
+header .name {
+	padding-left: 30px;
+	font-size: 108px;
+	line-height: 180px;
+	color: #b6dcff;
+	text-align: center;
+	text-shadow: 0px 0px 6px #666;
+}
+
+main {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	height: 30%;
+	margin: auto;
+}
+
+main .list {
+	display: flex;
+	height: 100%;
+	justify-content: center;
+}
+main .list .item {
+	width: 20%;
+	border-right: 5px solid #fff;
+}
+main .list .item a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	font-size: 60px;
+	color: #fff;
+	text-shadow: 0px 0px 10px #666;
+	text-align: center;
+}
+main .list .item a:hover{
+	background: rgba(0, 0, 0, 0.2);
+	transition: 500ms;
+}
+main .list .item:last-child {
+	border-right: 0;
+}
+
+footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	line-height: 50px;
+	color: #fff;
+	text-align: center;
+}
+footer a,
+footer span {
+	font-size: 14px;
+	color: #fff;
+}

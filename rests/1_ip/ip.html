@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta name="renderer" content="webkit" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta charset="UTF-8" />
+		<title>新页面</title>
+		<style>
+			input {
+				width: 200px;
+				height: 34px;
+				margin: 0 10px;
+				border: 1px solid #444;
+				border-radius: 0;
+				outline: none;
+				text-align: center;
+				font-size: 24px;
+			}
+			input:focus {
+				border: 1px solid #86a1d4;
+			}
+
+			button {
+				width: 80px;
+				height: 38px;
+				background: #86a1d4;
+				border: 0;
+				color: #fff;
+				font-size: 18px;
+				outline: none;
+				transition: 400ms;
+			}
+			button:hover,
+			button:focus {
+				background: #a8c1ee;
+			}
+			body {
+				margin: 0;
+				background: #eee;
+				color: #444;
+			}
+			.main {
+				width: 800px;
+				background: #fff;
+				margin: 20px auto;
+				padding: 0 30px 30px;
+				box-sizing: border-box;
+			}
+			.main h1,
+			.main h2 {
+				text-align: center;
+				font-weight: normal;
+			}
+
+			.main .ip,
+			.main .name {
+				display: flex;
+				justify-content: center;
+				line-height: 34px;
+				font-size: 26px;
+				height: 50px;
+			}
+			.main .ip input {
+				width: 60px;
+			}
+
+			.result {
+				display: flex;
+				flex-wrap: wrap;
+				
+				font-size: 18px;
+				padding-bottom: 20px;
+			}
+			.result .item.title {
+				border-top: 1px solid #999;
+			}
+			.result .item.title span {
+			}
+			.result .box {
+				width: 100%;
+			}
+			.result .item {
+				width: 100%;
+				padding: 10px 0;
+				border-bottom: 1px solid #999;
+				display: flex;
+				align-items: center;
+			}
+			.result .item span {
+				display: inline-block;
+				text-align: center;
+				flex: 0 0 auto;
+			}
+			.result .item .item-ip {
+				width: 150px;
+			}
+			.result .item .item-location {
+				width: 250px;
+			}
+			.result .item .item-name {
+				flex: 1 1 auto;
+			}
+			.red{
+				color: red;
+			}
+			.main{
+				position: relative;
+			}
+			.load{
+				position: absolute;
+				top: 0;
+				width: 100%;
+				left: 0;
+				background: #FFF;
+				margin: 0;
+				line-height: 442px;
+			}
+		</style>
+		<script>
+			window.onload = function () {
+				var inputs = document.querySelectorAll(".main>.ip>input");
+				inputs.forEach(function (el) {
+					el.onchange = function () {
+						if (this.value !== "") {
+							this.value = parseInt(this.value) || 0;
+						}
+
+						if (this.value > 255) {
+							this.value = 255;
+						} else if (this.value < 0) {
+							this.value = 0;
+						}
+					};
+				});
+				document.querySelector(".main>.ip button").onclick = findIp;
+				//粘贴事件
+				document.onpaste = function (e) {
+					var value = e.clipboardData.getData("text");
+					if (/^(0|([1-9]\d{0,2}))(\.(0|([1-9]\d{0,2}))){3}$/.test(value)) {
+						var arr = value.split(".");
+						inputs.forEach(function (el) {
+							el.value=arr.shift();
+							findIp();
+							// 1.1.1.1
+						});
+
+					}
+				};
+
+				function findIp() {
+					var arr = [];
+					inputs.forEach(function (el) {
+						arr.push(el.value);
+					});
+					var result = query(arr.join("."));
+					document.querySelector(".result .box").innerHTML = `
+					<div class="item">
+						<span class="item-ip">${arr.join(".")}</span>
+						<span class="item-location">${result.location}</span>
+						<span class="item-name">${result.name}</span>
+					</div>
+					`;
+				};
+			};
+		</script>
+		<script src="ip.js"></script>
+	</head>
+	<body>
+		<div class="main">
+			<h1 class="load">加载中</h1>
+			<h1>IP数据库查询</h1>
+			<h2>IP查询</h2>
+			<div class="ip">
+				<input type="text" tabindex="1" />
+				<span>.</span>
+				<input type="text" tabindex="2" />
+				<span>.</span>
+				<input type="text" tabindex="3" />
+				<span>.</span>
+				<input type="text" tabindex="4" />
+				<button>查询</button>
+			</div>
+			<h2>地址查询(不可用)</h2>
+			<div class="name">
+				<input type="text" />
+				<button>查询</button>
+			</div>
+			<h2>查询结果</h2>
+			<div class="result">
+				<div class="item title">
+					<span class="item-ip">ip</span>
+					<span class="item-location">地址</span>
+					<span class="item-name"> 详细 </span>
+				</div>
+				<div class="box">
+					<!-- <div class="item">
+						<span class="item-ip">*.*.*.*</span>
+						<span class="item-location">地址</span>
+						<span class="item-name">
+							详细
+						</span>
+					</div> -->
+					
+				</div>
+			</div>
+			<i>支持粘贴ip快速查询</i>
+			<br>
+			<span class="red">当前数据库日期2020.4,数据库文件较大(30m),请耐心等待加载</span>
+		</div>
+	</body>
+</html>
